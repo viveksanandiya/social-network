@@ -37,21 +37,6 @@ function Home({ user }) {
     });
   };
 
-  const addComment = (postId) => {
-    const text = prompt('Enter your comment:');
-    if (!text) return;
-
-    fetch(`http://localhost:5000/api/posts/${postId}/comment`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: user._id, text })
-    })
-    .then(res => res.json())
-    .then(updatedPost => {
-      setPosts(posts.map(p => p._id === postId ? updatedPost : p));
-    });
-  };
-
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white p-4 rounded shadow mb-6">
@@ -81,23 +66,8 @@ function Home({ user }) {
             >
               Like ({post.likes?.length || 0})
             </button>
-            <button 
-              onClick={() => addComment(post._id)}
-              className="hover:text-blue-600"
-            >
-              Comment ({post.comments?.length || 0})
-            </button>
             <button className="hover:text-blue-600">Share</button>
           </div>
-          {post.comments?.length > 0 && (
-            <div className="mt-3 border-t pt-2">
-              {post.comments.map((c, i) => (
-                <div key={i} className="text-sm mb-1">
-                  <span className="font-semibold">User:</span> {c.text}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       ))}
     </div>
