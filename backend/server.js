@@ -1,11 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { User, Post} = require('./models');//, Message 
+const cors = require('cors');
+const { User, Post } = require('./models');
 
 const app = express();
+app.use(cors()); 
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://viveksanandiya787:UaAy8DMmV2JTdhrz@cluster0.7f2f6.mongodb.net/social-network');
+
+mongoose.connection.once('open', async () => {
+  console.log('Connected to MongoDB');
+  
+  const demoUser = await User.findOne({ email: 'demo@test.com' });
+  if (!demoUser) {
+    const newUser = new User({
+      username: 'Demo User',
+      email: 'demo@test.com',
+      password: 'demo123',
+      bio: 'This is a demo user account'
+    });
+    await newUser.save();
+    console.log('Demo user created');
+  }
+});
 
 app.post('/api/register', async (req, res) => {
   const user = new User(req.body);
@@ -23,7 +41,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.get('/api/posts', async (req, res) => {
-  const posts = await Post.find().populate('author');
+  const posts = await Post.find().populate('author').sort({ _id: -1 });
   res.json(posts);
 });
 

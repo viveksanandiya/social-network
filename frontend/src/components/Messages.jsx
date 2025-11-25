@@ -1,11 +1,10 @@
-
 function Messages() {
   
   return (
-    <div >
+    <div className="100vh">
       Messages
     </div>
   );
 }
 
-export default Friends;
+export default Messages; 

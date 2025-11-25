@@ -38,7 +38,7 @@ function Home({ user }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto 100vh">
       <div className="bg-white p-4 rounded shadow mb-6">
         <textarea
           value={newPost}
@@ -66,7 +66,7 @@ function Home({ user }) {
             >
               Like ({post.likes?.length || 0})
             </button>
-            <button className="hover:text-blue-600">Share</button>
+            
           </div>
         </div>
       ))}

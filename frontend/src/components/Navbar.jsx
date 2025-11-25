@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Navbar({ onLogout }) {
   return (
-    <nav className="bg-blue-600 text-white p-4">
+    <nav className="bg-green-300 text-white p-4 100vh">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold">SocialNet</Link>
         <div className="flex gap-6 items-center">

@@ -49,7 +49,7 @@ function App() {
             <Route path="/messages" element={<Messages user={user} />} />
           </Routes>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   );

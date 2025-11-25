@@ -2,7 +2,7 @@
 function Friends() {
   
   return (
-    <div >
+    <div className="100vh" >
       friends
     </div>
   );
