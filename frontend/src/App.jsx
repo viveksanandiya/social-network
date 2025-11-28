@@ -49,7 +49,6 @@ function App() {
             <Route path="/messages" element={<Messages user={user} />} />
           </Routes>
         </div>
-        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   );

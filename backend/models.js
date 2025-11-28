@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
 
 const postSchema = new mongoose.Schema({
   content: String,
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  likes: String,
 });
 
 const User = mongoose.model('User', userSchema);

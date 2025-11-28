@@ -5,45 +5,57 @@ function Home({ user }) {
   const [newPost, setNewPost] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/posts')
-      .then(res => res.json())
-      .then(data => setPosts(data));
+    fetchPosts();
   }, []);
 
-  const createPost = () => {
-    if (!newPost.trim()) return;
-    
-    fetch('http://localhost:5000/api/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: newPost, author: user._id })
-    })
-    .then(res => res.json())
-    .then(data => {
-      setPosts([data, ...posts]);
-      setNewPost('');
-    });
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/posts');
+      const data = await res.json();
+      setPosts(data);
+    }catch (error){
+      console.error('Error fetching posts:', error);
+    }
   };
 
-  const likePost = (postId) => {
-    fetch(`http://localhost:5000/api/posts/${postId}/like`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user._id })
-    })
-    .then(res => res.json())
-    .then(updatedPost => {
+  const createPost = async () => {
+    if (!newPost.trim()) return;
+    
+    try {
+      const res = await fetch('http://localhost:5000/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newPost, author: user._id })
+      });
+      const data = await res.json();
+      setPosts([data, ...posts]);
+      setNewPost('');
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+  };
+
+  const likePost = async (postId) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/posts/${postId}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user._id })
+      });
+      const updatedPost = await res.json();
       setPosts(posts.map(p => p._id === postId ? updatedPost : p));
-    });
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
   };
 
   return (
-    <div className="max-w-2xl mx-auto 100vh">
+    <div className="max-w-2xl mx-auto">
       <div className="bg-white p-4 rounded shadow mb-6">
         <textarea
           value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
-          placeholder="What's on your mind?"
+          placeholder="new post place"
           className="w-full border p-2 rounded mb-2"
           rows="3"
         />
@@ -66,7 +78,7 @@ function Home({ user }) {
             >
               Like ({post.likes?.length || 0})
             </button>
-            
+            <button className="hover:text-blue-600">Share</button>
           </div>
         </div>
       ))}

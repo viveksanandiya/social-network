@@ -41,7 +41,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.get('/api/posts', async (req, res) => {
-  const posts = await Post.find().populate('author').sort({ _id: -1 });
+  const posts = await Post.find().populate('author');
   res.json(posts);
 });
 
