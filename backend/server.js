@@ -7,7 +7,7 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://viveksanandiya787:UaAy8DMmV2JTdhrz@cluster0.7f2f6.mongodb.net/social-network');
+mongoose.connect(process.env.MONGOURL);
 
 mongoose.connection.once('open', async () => {
   console.log('Connected to MongoDB');
